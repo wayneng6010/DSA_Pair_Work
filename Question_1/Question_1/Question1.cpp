@@ -20,7 +20,7 @@ int Display(Node* head) {
 		cout << head->data << " ";
 		head = head->next;
 	}
-	cout << "\n\n";
+	cout << "\n";
 	return 0;
 }
 
@@ -41,27 +41,29 @@ void Insert(Node* &head, int num[]) {
 	}
 }
 
-int Search(Node* &head, int target) {
+int Search(Node* &head, int target, bool correct) {
 	struct Node* temp;
 	temp = head;
 	while (temp != NULL)
 	{
 		if (temp->data == target) {
-			cout << "Found it! Good Job!\n\n";
+			cout << "\n----------------------------------\n\nFound it! Good Job!\n\n";
 			Display(head);
-			return 0;
+			correct = true;
+			return correct;
 		}
 		else {
 			temp = temp->next;
 		}
 	}
-	cout << "Ops! The number is not in the list\n\n";
-	return 0;
+	cout << "\n----------------------------------\nOps! The number is not in the list\n\nPlease try again...\n\n";
+	return correct;
 }
 
 
 int main() {
 	struct Node* head = NULL;
+	bool correct = false;
 
 	cout << "Please enter 5 integer numbers:-\n";
 	string counter = "";
@@ -90,14 +92,18 @@ int main() {
 	}
 
 	system("CLS");//clear console screen
-
-	cout << "Please enter another one number: ";
-	cin >> guessNum;
-
+	
+	Insert(head, num);//call insert function
+	
+	do{
+		cout << "Please enter another one number: ";
+		cin >> guessNum;
+		correct = Search(head, guessNum, correct);//call search function
+	} while (!correct);
+	
 	cout << "\n----------------------------------\n\n";
 
-	Insert(head, num);//call insert function
-	Search(head, guessNum);//call search function
+	
 
 	return 0;
 }
